@@ -7,12 +7,6 @@ import urllib
 import bs4
 
 
-# 구글 번역 결과
-def search_translate(source_str):
-    url = 'https://translate.google.co.kr/?hl=ko&tab=wT#en/ko/' + requests.utils.quote(source_str)
-    return url
-
-
 def search_weather(string):
     Finallocation = urllib.parse.quote(string + '+날씨')
     LocationInfo = ""
@@ -111,7 +105,5 @@ def search_weather(string):
         print("내일 오후 온도: " + tomorrowAfter)
         print("내일 오후 상태: " + tomorrowAState)
 
-        return 0
 
 
-search_weather('용인')
