@@ -10,7 +10,7 @@ def _help_desk():
     keywords.append("\n")
     keywords.append("\t2. *corona* : 현재 날짜의 국내 코로나 현황을 출력합니다.")
     keywords.append("\n")
-    keywords.append("\t3. *weather* : 현재 날짜의 날씨를 출력합니다.")
+    keywords.append("\t3. *weather, {위치}* : 설정한 위치의 당일, 내일 날씨를 출력합니다.")
     keywords.append("\n")
     keywords.append("\t4. *{아이디}*, *{행동1}* : 각 { } 안에 명령어를 넣어주세요.")
     keywords.append("\t\t\t{아이디}, 0 : 해당 아이디의 정보를 출력합니다.")
