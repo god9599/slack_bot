@@ -11,6 +11,8 @@ import def_crawling.help
 import def_crawling.git_user
 import def_crawling.boj
 import def_crawling.weather
+import def_crawling.real_time_search
+import def_crawling.restaurant
 
 app = Flask(__name__)
 
@@ -26,7 +28,7 @@ hds_json = {'User-Agent': user_agent, 'Content-Type': 'Application/json'}
 
 # 이벤트 핸들하는 함수
 
-STATUS_CODE = 200
+# STATUS_CODE = 200
 def _event_handler(event_type, slack_event):
 
     if event_type == "app_mention":
@@ -46,8 +48,14 @@ def _event_handler(event_type, slack_event):
             elif text[1] == 'corona':
                 keywords = def_crawling.corona._crawl_corona()
 
+            elif text[1] == 'naver':
+                keywords = def_crawling.real_time_search._crawl_naver_search()
+
             elif text[1] == 'weather' and text[2]:
                 keywords = def_crawling.weather.search_weather(text[2])
+
+            elif text[1] == 'restaurant' and text[2]:
+                keywords = def_crawling.restaurant.serach_restaurant(text[2])
 
             elif text[1] == 'help':
                 keywords = def_crawling.help._help_desk()
@@ -64,16 +72,16 @@ def _event_handler(event_type, slack_event):
             elif len(text) >= 3 and match_text[0] is not None:
                 keywords = def_crawling.git_user._get_dd_contribution(text[1], match_text[0])
 
-            else:
-                global STATUS_CODE
-                keywords = ERR_TEXT
-                STATUS_CODE = 400
-
-            if STATUS_CODE != 400:
-                STATUS_CODE = 200
+            # else:
+            #     global STATUS_CODE
+            #     keywords = ERR_TEXT
+            #     STATUS_CODE = 400
+            #
+            # if STATUS_CODE != 400:
+            #     STATUS_CODE = 200
 
         except Exception as e:
-            STATUS_CODE = 500
+            # STATUS_CODE = 500
             keywords = ERR_TEXT
             print("오류발생", e)
 
@@ -87,7 +95,7 @@ def _event_handler(event_type, slack_event):
     # If the event_type does not have a handler
     message = "You have not added an event handler for the %s" % event_type
     # Return a helpful error message
-    return make_response(message, STATUS_CODE, {"X-Slack-No-Retry": 1})
+    return make_response(message, {"X-Slack-No-Retry": 1})
 
 
 @app.route("/slack", methods=["GET", "POST"])
