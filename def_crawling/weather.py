@@ -22,7 +22,11 @@ def search_weather(location):
     ErrorCheck = soup.find('span', {'class': 'btn_select'})
 
     if 'None' in str(ErrorCheck):
-        print("Error! 지역 검색 오류!")
+        row = "위치를 다시 검색해주세용~~"
+        keywords.append(row)
+
+        return u'\n'.join(keywords)
+
     else:
         # 지역 정보
         for i in soup.select('span[class=btn_select]'):
